@@ -1,11 +1,7 @@
 import 'package:e_commerce_app/auth/controllers/reg_controller.dart';
 import 'package:e_commerce_app/auth/pages/login_page.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/src/extension_instance.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/get.dart';
 
 class RegisterPage extends StatelessWidget {
   RegisterPage({super.key});
@@ -16,84 +12,184 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-          title: const Text("Register")),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
+    return Scaffold(      backgroundColor: Colors.white,
+
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Form(
           key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: controller.nameController,
-                decoration: const InputDecoration(labelText: "Name"),
-                validator: (validate) {
-                  return validate!.isEmpty ? "Enter name" : null;
-                },
-              ),
-              TextFormField(
-                controller: controller.emailController,
-                decoration: const InputDecoration(labelText: "Email"),
-                validator: (validate) {
-                  return controller.validateEmail(validate!);
-                },
-              ),
-              TextFormField(
-                controller: controller.phoneController,
-                decoration: const InputDecoration(labelText: "Phone"),
-                keyboardType: TextInputType.phone,
-                validator: (validate){
-                  return controller.validatePhone(validate!);
-                },
-              ),
-              TextFormField(
-                controller: controller.addressController,
-                decoration: const InputDecoration(labelText: "Address"),
-                keyboardType: TextInputType.phone,
-                validator: (validate){
-                  return controller.validatePhone(validate!);
-                },
-              ),
-             Obx(()=>  TextFormField(
-                controller: controller.passwordController,
-                decoration: InputDecoration(labelText: "Password",
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      obscurePassword.value
-                          ? Icons.visibility_off
-                          : Icons.visibility,
+          child: SafeArea(
+            child: Column(
+              children: [
+                const SizedBox(height: 40),
+                const Text(
+                  "Create Account",
+                  style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87),
+                ),
+                const SizedBox(height: 30),
+            
+                // Name Field
+                TextFormField(
+                  controller: controller.nameController,
+                  validator: (val) =>
+                  val!.isEmpty ? "Enter your name" : null,
+                  decoration: InputDecoration(
+                    hintText: "Name",
+                    prefixIcon: const Icon(Icons.person),
+                    filled: true,
+                    fillColor: Colors.grey.shade100,
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 18, horizontal: 20),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: BorderSide.none,
                     ),
-                    onPressed: () {
-                      obscurePassword.value = !obscurePassword.value;
-                    },
                   ),
                 ),
-                obscureText: obscurePassword.value,
-                validator: (validate){
-                  return controller.validatePassword(validate!);
-                },
-              ),
-             ),
-              const SizedBox(height: 20),
-              Obx(() => controller.isLoading.value
-                  ? const CircularProgressIndicator()
-                  : ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    controller.register();
-                  }
-                },
-                child: const Text("Register"),
-              )),
-              TextButton(
-                onPressed: (){
-                   Get.to(() => LoginPage());
-                },
-                child: const Text("Already have an account? Login"),
-              )
-            ],
+                const SizedBox(height: 16),
+            
+                // Email Field
+                TextFormField(
+                  controller: controller.emailController,
+                  validator: (val) => controller.validateEmail(val!),
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    hintText: "Email",
+                    prefixIcon: const Icon(Icons.email),
+                    filled: true,
+                    fillColor: Colors.grey.shade100,
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 18, horizontal: 20),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+            
+                // Phone Field
+                TextFormField(
+                  controller: controller.phoneController,
+                  validator: (val) => controller.validatePhone(val!),
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(
+                    hintText: "Phone",
+                    prefixIcon: const Icon(Icons.phone),
+                    filled: true,
+                    fillColor: Colors.grey.shade100,
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 18, horizontal: 20),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+            
+                // Address Field
+                TextFormField(
+                  controller: controller.addressController,
+                  validator: (val) =>
+                  val!.isEmpty ? "Enter your address" : null,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                    hintText: "Address",
+                    prefixIcon: const Icon(Icons.location_on),
+                    filled: true,
+                    fillColor: Colors.grey.shade100,
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 18, horizontal: 20),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+            
+                // Password Field
+                Obx(() => TextFormField(
+                  controller: controller.passwordController,
+                  validator: (val) => controller.validatePassword(val!),
+                  obscureText: obscurePassword.value,
+                  decoration: InputDecoration(
+                    hintText: "Password",
+                    prefixIcon: const Icon(Icons.lock),
+                    suffixIcon: IconButton(
+                      icon: Icon(obscurePassword.value
+                          ? Icons.visibility_off
+                          : Icons.visibility),
+                      onPressed: () =>
+                      obscurePassword.value = !obscurePassword.value,
+                    ),
+                    filled: true,
+                    fillColor: Colors.grey.shade100,
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 18, horizontal: 20),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                )),
+                const SizedBox(height: 30),
+            
+                // Register Button
+                Obx(() => controller.isLoading.value
+                    ? const CircularProgressIndicator()
+                    : SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepPurple,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        controller.register();
+                      }
+                    },
+                    child: const Text(
+                      "Sign Up",
+                      style: TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
+                    ),
+                  ),
+                )),
+            
+                const SizedBox(height: 16),
+
+                SizedBox(
+                  width: double.infinity,
+                  height: 52,
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      side: const BorderSide(color: Colors.grey),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      "Back to Login",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 40),
+              ],
+            ),
           ),
         ),
       ),
