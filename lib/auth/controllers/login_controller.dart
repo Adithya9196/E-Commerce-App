@@ -31,7 +31,18 @@ class LoginController extends GetxController {
       emailController.clear();
       passwordController.clear();
     } catch (e) {
-      Get.snackbar("Login Failed", "Please enter valid email or password");
+      Get.snackbar("Login Failed", "Please enter valid email or password",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.white54,
+        colorText: Colors.black,
+        margin: const EdgeInsets.all(16),
+        borderRadius: 14,
+        icon: const Icon(Icons.check_circle, color: Colors.green),
+        duration: const Duration(seconds: 2),
+        animationDuration: const Duration(milliseconds: 300),
+        isDismissible: true,
+        forwardAnimationCurve: Curves.easeOutBack,
+      );
     } finally {
       isLoading.value = false;
     }

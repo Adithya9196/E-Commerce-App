@@ -39,7 +39,18 @@ class RegisterController extends GetxController {
         address: addressController.text.trim(),
         password: passwordController.text.trim(),
       );
-      Get.snackbar("Success", "Registration successful");
+      Get.snackbar("Success", "Registration successful",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.white54,
+        colorText: Colors.black,
+        margin: const EdgeInsets.all(16),
+        borderRadius: 14,
+        icon: const Icon(Icons.check_circle, color: Colors.green),
+        duration: const Duration(seconds: 2),
+        animationDuration: const Duration(milliseconds: 300),
+        isDismissible: true,
+        forwardAnimationCurve: Curves.easeOutBack,
+      );
       Get.offAll(() => LoginPage());
       nameController.clear();
       emailController.clear();
