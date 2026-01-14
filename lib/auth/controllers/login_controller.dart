@@ -1,5 +1,5 @@
 import 'package:e_commerce_app/auth/service/auth_service.dart';
-import 'package:e_commerce_app/home.dart';
+import 'package:e_commerce_app/profile/page/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,7 +27,7 @@ class LoginController extends GetxController {
         emailController.text.trim(),
         passwordController.text.trim(),
       );
-      Get.offAll(() => HomePage());
+      Get.offAll(() => ProfilePage());
       emailController.clear();
       passwordController.clear();
     } catch (e) {
