@@ -10,7 +10,7 @@ class OrderController extends GetxController {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
 
-  String get uid => _auth.currentUser!.uid;
+  String? get uid => _auth.currentUser?.uid;
 
   @override
   void onInit() {
