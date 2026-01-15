@@ -1,5 +1,4 @@
 import 'package:e_commerce_app/cart/controller/cart_controller.dart';
-import 'package:e_commerce_app/order/controller/order_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
@@ -11,6 +10,7 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text("My Cart",style: TextStyle(color: Colors.white),),
