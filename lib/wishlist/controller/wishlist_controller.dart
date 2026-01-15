@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/products/model/product_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class WishlistController extends GetxController {
@@ -48,13 +49,23 @@ class WishlistController extends GetxController {
 
     if (doc.exists) {
       await docRef.delete();
-      Get.snackbar("Wishlist", "Removed from wishlist");
     } else {
       await docRef.set({
         'product': product.toJson(),
         'createdAt': FieldValue.serverTimestamp(),
       });
-      Get.snackbar("Wishlist", "Added to wishlist");
+      Get.snackbar("Wishlist", "Added to wishlist",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.white54,
+        colorText: Colors.black,
+        margin: const EdgeInsets.all(16),
+        borderRadius: 14,
+        icon: const Icon(Icons.error_outline_outlined, color: Colors.red),
+        duration: const Duration(seconds: 2),
+        animationDuration: const Duration(milliseconds: 300),
+        isDismissible: true,
+        forwardAnimationCurve: Curves.easeOutBack,
+      );
     }
   }
 
