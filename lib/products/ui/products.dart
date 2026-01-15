@@ -23,6 +23,7 @@ class ProductPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text("Products", style: TextStyle(fontWeight: FontWeight.w500)),
         centerTitle: true,
         backgroundColor: Colors.white,
