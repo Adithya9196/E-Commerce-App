@@ -27,7 +27,7 @@ class LoginController extends GetxController {
         emailController.text.trim(),
         passwordController.text.trim(),
       );
-      // Get.offAll(() => ProductPage());
+
       emailController.clear();
       passwordController.clear();
     } catch (e) {
@@ -37,7 +37,7 @@ class LoginController extends GetxController {
         colorText: Colors.black,
         margin: const EdgeInsets.all(16),
         borderRadius: 14,
-        icon: const Icon(Icons.check_circle, color: Colors.green),
+        icon: const Icon(Icons.error_outline_outlined, color: Colors.red),
         duration: const Duration(seconds: 2),
         animationDuration: const Duration(milliseconds: 300),
         isDismissible: true,
