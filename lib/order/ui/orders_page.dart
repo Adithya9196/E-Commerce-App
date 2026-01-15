@@ -42,7 +42,6 @@ class MyOrdersPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    /// 🔹 ORDER HEADER
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -64,7 +63,6 @@ class MyOrdersPage extends StatelessWidget {
                     const SizedBox(height: 10),
                     const Divider(),
 
-                    /// 🔹 ORDER ITEMS WITH IMAGE
                     Column(
                       children: order.items.map((item) {
                         final product = item['product'];
@@ -80,7 +78,6 @@ class MyOrdersPage extends StatelessWidget {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              /// 🖼 PRODUCT IMAGE
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: imageUrl != null
@@ -100,7 +97,6 @@ class MyOrdersPage extends StatelessWidget {
 
                               const SizedBox(width: 12),
 
-                              /// 📦 PRODUCT INFO
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,7 +129,6 @@ class MyOrdersPage extends StatelessWidget {
 
                     const Divider(),
 
-                    /// 🔹 TOTAL AMOUNT
                     Align(
                       alignment: Alignment.centerRight,
                       child: Text(
