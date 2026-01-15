@@ -1,6 +1,9 @@
 import 'package:e_commerce_app/auth/pages/login_page.dart';
+import 'package:e_commerce_app/cart/ui/cart_page.dart';
+import 'package:e_commerce_app/order/ui/orders_page.dart';
 import 'package:e_commerce_app/profile/controller/profile_controller.dart';
 import 'package:e_commerce_app/profile/page/edit_profile_page.dart';
+import 'package:e_commerce_app/wishlist/ui/wishlist_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,8 +19,9 @@ class ProfilePage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Obx(() {
         if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator());
+          return const CartShimmer();
         }
+
         return Column(
           children: [
             Container(
@@ -26,8 +30,6 @@ class ProfilePage extends StatelessWidget {
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   colors: [Color(0xff6D5DF6), Color(0xff8E7BFF)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
                 ),
                 borderRadius: BorderRadius.vertical(
                   bottom: Radius.circular(28),
@@ -63,7 +65,7 @@ class ProfilePage extends StatelessWidget {
                     controller.emailController.text,
                     style: const TextStyle(
                       fontSize: 14,
-                      color: Colors.white,
+                      color: Colors.white70,
                     ),
                   ),
                 ],
@@ -71,7 +73,6 @@ class ProfilePage extends StatelessWidget {
             ),
 
             const SizedBox(height: 20),
-
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -87,7 +88,31 @@ class ProfilePage extends StatelessWidget {
                       title: "Address",
                       value: controller.addressController.text,
                     ),
+
+                    const SizedBox(height: 10),
+
+                    Row(
+                      children: [
+                        _gridCard(
+                          icon: Icons.shopping_bag_outlined,
+                          title: "Orders",
+                          onTap: () {
+                             Get.to(() => MyOrdersPage());
+                          },
+                        ),
+                        const SizedBox(width: 14),
+                        _gridCard(
+                          icon: Icons.favorite_border,
+                          title: "Wishlist",
+                          onTap: () {
+                             Get.to(() => WishlistPage());
+                          },
+                        ),
+                      ],
+                    ),
+
                     const Spacer(),
+
                     SizedBox(
                       width: double.infinity,
                       height: 52,
@@ -103,7 +128,7 @@ class ProfilePage extends StatelessWidget {
                         },
                         child: const Text(
                           "Edit Profile",
-                          style: TextStyle(fontSize: 16,color: Colors.white),
+                          style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                       ),
                     ),
@@ -115,18 +140,15 @@ class ProfilePage extends StatelessWidget {
                       height: 52,
                       child: OutlinedButton(
                         style: OutlinedButton.styleFrom(
-                          backgroundColor:  Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(14),
                           ),
-                          side: BorderSide(
-                            color: Colors.grey,
-                          ),
+                          side: const BorderSide(color: Colors.grey),
                         ),
-                        onPressed: () {
-                          Get.to(LoginPage());
+                        onPressed: () async {
+                          await FirebaseAuth.instance.signOut();
+                          Get.offAll(() => LoginPage());
                         },
-
                         child: const Text(
                           "Logout",
                           style: TextStyle(color: Colors.red),
@@ -153,8 +175,8 @@ class ProfilePage extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 14),
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: Colors.white,
         borderRadius: BorderRadius.circular(18),
+        color: Colors.white,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.04),
@@ -174,29 +196,57 @@ class ProfilePage extends StatelessWidget {
             child: Icon(icon, color: const Color(0xff6D5DF6)),
           ),
           const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title,
+                  style: const TextStyle(fontSize: 13, color: Colors.grey)),
+              const SizedBox(height: 4),
+              Text(value,
                   style: const TextStyle(
-                    fontSize: 13,
-                    color: Colors.grey,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  value,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
+                      fontSize: 16, fontWeight: FontWeight.w500)),
+            ],
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _gridCard({
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+  }) {
+    return Expanded(
+      child: InkWell(
+        borderRadius: BorderRadius.circular(18),
+        onTap: onTap,
+        child: Container(
+          height: 120,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(18),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 12,
+                offset: const Offset(0, 6),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 34, color: const Color(0xff6D5DF6)),
+              const SizedBox(height: 10),
+              Text(
+                title,
+                style:
+                const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
