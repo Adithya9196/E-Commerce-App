@@ -1,12 +1,13 @@
 import 'package:e_commerce_app/cart/controller/cart_controller.dart';
 import 'package:e_commerce_app/cart/ui/cart_page.dart';
 import 'package:e_commerce_app/products/model/product_model.dart';
+import 'package:e_commerce_app/wishlist/controller/wishlist_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final ProductList product;
-  final RxBool isWishlist = false.obs;
+  final WishlistController wishlistController = Get.find<WishlistController>();
   final CartController cartController = Get.put(CartController());
 
   ProductDetailPage({super.key, required this.product});
@@ -29,14 +30,16 @@ class ProductDetailPage extends StatelessWidget {
           Obx(
                 () => IconButton(
               icon: Icon(
-                isWishlist.value ? Icons.favorite : Icons.favorite_border,
+                wishlistController.isInWishlist(product)
+                    ? Icons.favorite
+                    : Icons.favorite_border,
                 color: Colors.redAccent,
               ),
               onPressed: () {
-                isWishlist.value = !isWishlist.value;
+                wishlistController.toggleWishlist(product);
                 Get.snackbar(
                   "Wishlist",
-                  isWishlist.value
+                  wishlistController.isInWishlist(product)
                       ? "${product.title} added to wishlist"
                       : "${product.title} removed from wishlist",
                   snackPosition: SnackPosition.BOTTOM,
