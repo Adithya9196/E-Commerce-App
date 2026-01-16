@@ -39,9 +39,7 @@ class ProductDetailPage extends StatelessWidget {
                 wishlistController.toggleWishlist(product);
                 Get.snackbar(
                   "Wishlist",
-                  wishlistController.isInWishlist(product)
-                      ? "${product.title} added to wishlist"
-                      : "${product.title} removed from wishlist",
+                "${product.title} added to wishlist",
                   snackPosition: SnackPosition.BOTTOM,
                   backgroundColor: Colors.white,
                   colorText: Colors.black,
