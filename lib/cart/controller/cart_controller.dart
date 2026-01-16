@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class CartController extends GetxController {
   RxList<ProductList> cartItems = <ProductList>[].obs;
   RxList<int> quantities = <int>[].obs;
-  final isLoading = true.obs;
+  final isLoading = false.obs;
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -64,9 +64,6 @@ class CartController extends GetxController {
       'product': product.toJson(),
       'quantity': getQuantity(product),
     });
-
-    Get.snackbar("Cart", "${product.title} added to cart",
-        snackPosition: SnackPosition.BOTTOM);
   }
 
   int getQuantity(ProductList product) {

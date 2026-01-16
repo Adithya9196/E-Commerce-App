@@ -5,7 +5,7 @@ import 'package:shimmer/shimmer.dart';
 
 class CartPage extends StatelessWidget {
   CartPage({super.key});
-  final CartController controller = Get.put(CartController());
+  final CartController controller = Get.find<CartController>();
 
   @override
   Widget build(BuildContext context) {
