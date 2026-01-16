@@ -15,13 +15,21 @@ class CartController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchCartItems();
+    // fetchCartItems();
+    _auth.authStateChanges().listen((user) {
+      if (user != null) {
+        fetchCartItems(user.uid);
+      } else {
+        cartItems.clear();
+        quantities.clear();
+      }
+    });
   }
 
   String get uid => _auth.currentUser!.uid;
 
   // Fetch Cart Items from Firestore
-  void fetchCartItems() async {
+  void fetchCartItems(String uid) async {
     isLoading.value = true;
     await Future.delayed(const Duration(seconds: 2));
     final snapshot = await _firestore
