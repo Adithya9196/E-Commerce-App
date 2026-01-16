@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/auth/pages/login_page.dart';
+import 'package:e_commerce_app/cart/controller/cart_controller.dart';
 import 'package:e_commerce_app/firebase_options.dart';
 import 'package:e_commerce_app/products/ui/products.dart';
 import 'package:e_commerce_app/profile/page/profile_page.dart';
@@ -11,6 +12,7 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Get.put(CartController(), permanent: true);
   runApp(const MyApp());
 }
 
