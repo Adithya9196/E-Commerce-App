@@ -85,7 +85,7 @@ class MyOrdersPage extends StatelessWidget {
                                   imageUrl,
                                   width: 60,
                                   height: 60,
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.contain,
                                 )
                                     : Container(
                                   width: 60,
